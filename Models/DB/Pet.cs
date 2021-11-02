@@ -11,6 +11,7 @@ namespace pediagnoswebapi.Models.DB
         public string Ad { get; set; }
         public int? Yas { get; set; }
         public int? OwnerId { get; set; }
+        public byte[] PetImage { get; set; }
 
         public virtual User Owner { get; set; }
     }

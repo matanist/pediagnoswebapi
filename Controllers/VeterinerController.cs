@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -45,11 +46,22 @@ namespace pediagnoswebapi.Controllers
             return new ApiResponse { Code = 200, Message = "Başarılı", Set = petDto };
         }
         [HttpPost]
-        public ApiResponse Post(Pet pet)
+        public ApiResponse Post([FromForm]PetInfoPostModel pet)
         {
             if (pet == null) return new ApiResponse { Code = 400, Message = "Pet null olamaz" };
 
-            _context.Pets.Add(pet);
+            var newPet = new Pet();
+            newPet.Ad = pet.Ad;
+            newPet.Yas = pet.Yas;
+            newPet.OwnerId = pet.OwnerId;
+            using (var ms = new MemoryStream())
+            {
+                 pet.FormFile.CopyTo(ms);
+                 var fileBytes = ms.ToArray();
+                 newPet.PetImage=fileBytes;
+            }
+
+            _context.Pets.Add(newPet);
             _context.SaveChanges();
             return new ApiResponse { Code = 200, Message = "Başarılı", Set = pet };
         }

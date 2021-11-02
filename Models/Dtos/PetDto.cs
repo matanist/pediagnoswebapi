@@ -7,5 +7,6 @@ namespace pediagnoswebapi.Models.Dtos
         public int Yas { get; set; }
         public int OwnerId { get; set; }
         public OwnerDto Owner { get; set; }
+        public byte[] PetImage { get; set; }
     }
 }

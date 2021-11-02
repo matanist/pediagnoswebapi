@@ -39,6 +39,8 @@ namespace pediagnoswebapi.Models.DB
 
                 entity.Property(e => e.Ad).HasMaxLength(255);
 
+                entity.Property(e => e.PetImage).HasColumnType("image");
+
                 entity.HasOne(d => d.Owner)
                     .WithMany(p => p.Pets)
                     .HasForeignKey(d => d.OwnerId)
